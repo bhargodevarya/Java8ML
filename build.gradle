@@ -1,0 +1,17 @@
+group 'Java8ML'
+version '1.0-SNAPSHOT'
+
+apply plugin: 'java'
+apply plugin: 'idea'
+apply plugin: 'eclipse'
+
+sourceCompatibility = 1.8
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    compile("org.springframework.boot:spring-boot-starter:1.5.3.RELEASE")
+    testCompile group: 'junit', name: 'junit', version: '4.12'
+}

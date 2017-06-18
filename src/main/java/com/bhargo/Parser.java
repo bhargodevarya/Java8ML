@@ -1,0 +1,6 @@
+package com.bhargo;
+
+public interface Parser<T> {
+
+    T parse(String line);
+}
