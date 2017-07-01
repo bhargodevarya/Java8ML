@@ -1,6 +1,7 @@
 package com.bhargo.parser;
 
 import com.bhargo.config.MetaInfo;
+import com.bhargo.model.BaseModel;
 import com.bhargo.model.builder.Builder;
 import com.bhargo.model.builder.BuilderFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,11 +20,22 @@ public abstract class AbstractParseStrategy implements ParseStrategy {
         this.currentFile = currentFile;
     }
 
+    /**
+     * returns true if a line has all the fields to populate the model,
+     * else false.
+     * @param line, the line being read from a file
+     * @return
+     */
+    protected boolean hasEnoughFields(String line) {
+        return line.split(",").length ==
+                metaInfo.getColumns(currentFile);
+    }
+
     @Override
-    public void parse(String line) {
+    public BaseModel parse(String line) {
         Builder builder = getBuilderFor(currentFile);
-        if(!hasEnoughFields(line, builder)) {
-            String[] arr = new String[builder.getNumOfFields()];
+        if(!hasEnoughFields(line)) {
+            String[] arr = new String[metaInfo.getColumns(currentFile)];
             for(int i =0;i<arr.length;i++) {
                 if(i <= line.split(",").length-1) {
                     arr[i] = line.split(",")[i];
@@ -32,9 +44,9 @@ public abstract class AbstractParseStrategy implements ParseStrategy {
                     arr[i] = null;
                 }
             }
-            //System.out.println(builder.buildWithArr(arr));
+            return (BaseModel) builder.buildWithArr(arr);
         } else {
-            //System.out.println(builder.buildWithArr(line.split(",")));
+            return (BaseModel) builder.buildWithArr(line.split(","));
         }
     }
 

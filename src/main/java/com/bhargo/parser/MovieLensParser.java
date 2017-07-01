@@ -1,8 +1,11 @@
 package com.bhargo.parser;
 
-import com.bhargo.model.builder.Builder;
+import com.bhargo.model.BaseModel;
 
-public class MovieLensParser implements Parser<String> {
+import java.util.ArrayList;
+import java.util.List;
+
+public class MovieLensParser implements Parser<BaseModel> {
 
     /**
      * TODO - As per lambdas, I should be passing "how to parse" as argument
@@ -11,8 +14,9 @@ public class MovieLensParser implements Parser<String> {
      * @return
      */
     @Override
-    public String parse(String line, ParseStrategy parseStrategy) {
-        parseStrategy.parse(line);
-        return null;
+    public List<BaseModel> parse(String line, ParseStrategy parseStrategy) {
+        List<BaseModel> list = new ArrayList<>();
+        list.add(parseStrategy.parse(line));
+        return list;
     }
 }

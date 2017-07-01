@@ -2,7 +2,7 @@ package com.bhargo.model;
 
 import java.util.Objects;
 
-public class Movie {
+public class Movie implements BaseModel {
 
     private int movieId;
     private String title;

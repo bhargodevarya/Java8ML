@@ -2,7 +2,7 @@ package com.bhargo.model;
 
 import java.util.Objects;
 
-public class Tag {
+public class Tag implements BaseModel {
 
     private int userId;
     private int movieId;

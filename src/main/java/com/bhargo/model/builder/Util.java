@@ -30,12 +30,12 @@ public class Util {
      */
     public void init() {
         Arrays.stream(fileDir.listFiles()).
-                filter(n -> !n.getName().contains("txt") && n.getName().contains("movies")).
+                filter(n -> !n.getName().contains("txt") && n.getName().contains("ratings")).
                 forEach(this::startParse);
     }
 
     private void startParse(File file) {
-        AbstractParseStrategy parseStrategy = file.getName().contains("movies") ?
+        AbstractParseStrategy parseStrategy = file.getName().contains("movie") ?
                 movieParseStrategy : standardParserStrategy;
         try {
             parseStrategy.setCurrentFile(file.getName());
@@ -46,6 +46,6 @@ public class Util {
     }
 
     private void parse(String line, ParseStrategy parseStrategy) {
-        parser.parse(line, parseStrategy);
+        parser.parse(line, parseStrategy).forEach(System.out::println);
     }
 }

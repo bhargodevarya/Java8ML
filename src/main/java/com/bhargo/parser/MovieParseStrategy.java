@@ -1,5 +1,7 @@
 package com.bhargo.parser;
 
+import com.bhargo.model.BaseModel;
+
 public class MovieParseStrategy extends AbstractParseStrategy {
 
     /**
@@ -8,13 +10,13 @@ public class MovieParseStrategy extends AbstractParseStrategy {
      * @param line
      */
     @Override
-    public void parse(String line) {
+    public BaseModel parse(String line) {
         if(!line.contains("\"")) {
-            super.parse(line);
+            return super.parse(line);
         } else {
             // --TODO write the logic
-            System.out.println("Movie name has a comma");
+            //System.out.println("Movie name has a comma");
+            return null;
         }
-
     }
 }

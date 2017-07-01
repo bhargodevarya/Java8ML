@@ -2,7 +2,7 @@ package com.bhargo.model;
 
 import java.util.Objects;
 
-public class GenomeTag {
+public class GenomeTag implements BaseModel {
 
     private String tagId;
     private String tag;

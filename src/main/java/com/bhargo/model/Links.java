@@ -2,7 +2,7 @@ package com.bhargo.model;
 
 import java.util.Objects;
 
-public class Links {
+public class Links implements BaseModel {
     private String movieId;
     private String imdbId;
     private String tmdbId;

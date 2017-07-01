@@ -2,7 +2,7 @@ package com.bhargo.model;
 
 import java.util.Objects;
 
-public class GenomeScore {
+public class GenomeScore implements BaseModel {
     private int movieId;
     private int tagId;
     private float relevance;

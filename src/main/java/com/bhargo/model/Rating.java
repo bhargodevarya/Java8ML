@@ -2,7 +2,7 @@ package com.bhargo.model;
 
 import java.util.Objects;
 
-public class Rating {
+public class Rating implements BaseModel {
 
     private int userId;
     private int movieId;
