@@ -1,4 +1,4 @@
-package com.bhargo;
+package com.bhargo.config;
 
 import com.bhargo.model.builder.*;
 import com.bhargo.parser.MovieLensParser;
@@ -71,6 +71,10 @@ public class Config {
         return new StandardParserStrategy();
     }
 
+    @Bean
+    public MetaInfo metaInfo() {
+        return new MetaInfo();
+    }
     @Bean
     public BuilderFactory builderFactory() {
         BuilderFactory builderFactory = new BuilderFactory();

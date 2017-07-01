@@ -1,9 +1,6 @@
 package com.bhargo.model.builder;
 
-import com.bhargo.parser.MovieParseStrategy;
-import com.bhargo.parser.ParseStrategy;
-import com.bhargo.parser.Parser;
-import com.bhargo.parser.StandardParserStrategy;
+import com.bhargo.parser.*;
 import com.bhargo.reader.Reader;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -38,16 +35,17 @@ public class Util {
     }
 
     private void startParse(File file) {
-        ParseStrategy parseStrategy = file.getName().contains("movies") ?
+        AbstractParseStrategy parseStrategy = file.getName().contains("movies") ?
                 movieParseStrategy : standardParserStrategy;
         try {
-            reader.readAsStream(file).forEach(l -> parse(l, file, parseStrategy));
+            parseStrategy.setCurrentFile(file.getName());
+            reader.readAsStream(file).forEach(l -> parse(l, parseStrategy));
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
 
-    private void parse(String line, File file, ParseStrategy parseStrategy) {
-        parser.parse(line, file.getName(), parseStrategy);
+    private void parse(String line, ParseStrategy parseStrategy) {
+        parser.parse(line, parseStrategy);
     }
 }

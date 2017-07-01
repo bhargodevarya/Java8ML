@@ -5,7 +5,7 @@ import com.bhargo.model.builder.Builder;
 @FunctionalInterface
 public interface ParseStrategy {
 
-    void parse(String line, String fileName);
+    void parse(String line);
 
     /**
      * returns true if a line has all the fields to populate the model,

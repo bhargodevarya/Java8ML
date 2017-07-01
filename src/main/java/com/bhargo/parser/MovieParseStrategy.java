@@ -8,9 +8,9 @@ public class MovieParseStrategy extends AbstractParseStrategy {
      * @param line
      */
     @Override
-    public void parse(String line, String fileName) {
+    public void parse(String line) {
         if(!line.contains("\"")) {
-            super.parse(line,fileName);
+            super.parse(line);
         } else {
             // --TODO write the logic
             System.out.println("Movie name has a comma");
