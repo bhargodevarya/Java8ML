@@ -1,9 +1,5 @@
 package com.bhargo.model;
 
-import com.bhargo.Builder;
-
-import java.util.HashMap;
-import java.util.Map;
 import java.util.Objects;
 
 public class GenomeScore {

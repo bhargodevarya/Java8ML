@@ -1,8 +1,6 @@
 package com.bhargo.model.builder;
 
-import com.bhargo.Builder;
 import com.bhargo.model.Links;
-import org.springframework.stereotype.Service;
 
 public class LinksBuilder implements Builder<Links> {
 

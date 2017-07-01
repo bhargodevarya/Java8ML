@@ -1,6 +1,5 @@
 package com.bhargo.model.builder;
 
-import com.bhargo.Builder;
 import com.bhargo.model.Movie;
 
 public class MovieBuilder implements Builder<Movie> {

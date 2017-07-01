@@ -1,6 +1,5 @@
 package com.bhargo.model.builder;
 
-import com.bhargo.Builder;
 import com.bhargo.model.GenomeTag;
 
 public class GenomeTagBuilder implements Builder<GenomeTag>{

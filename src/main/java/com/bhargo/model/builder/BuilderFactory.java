@@ -1,7 +1,5 @@
 package com.bhargo.model.builder;
 
-import com.bhargo.Builder;
-
 import java.util.Map;
 
 public class BuilderFactory {

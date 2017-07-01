@@ -1,6 +1,5 @@
 package com.bhargo.model.builder;
 
-import com.bhargo.Builder;
 import com.bhargo.model.Rating;
 
 public class RatingBuilder implements Builder<Rating> {

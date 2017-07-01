@@ -1,43 +1,19 @@
 package com.bhargo.parser;
 
-import com.bhargo.Builder;
-import com.bhargo.model.builder.BuilderFactory;
-import org.springframework.beans.factory.annotation.Autowired;
+import com.bhargo.model.builder.Builder;
 
 public class MovieLensParser implements Parser<String> {
 
-    @Autowired
-    private BuilderFactory builderFactory;
-
     /**
-     * TODO - As per lambdas, I should be passing "how to pass" as argument
+     * TODO - As per lambdas, I should be passing "how to parse" as argument
      * Parses a give line
      * @param line, the line to be parsed
      * @param fileName, the file name the line is in
      * @return
      */
     @Override
-    public String parse(String line, String fileName) {
-        Builder builder = builderFactory.getBuilderFor(fileName);
-        if(!line.contains("\"")) {
-            if(!hasEnoughFields(line, builder)) {
-                String[] arr = new String[builder.getNumOfFields()];
-                for(int i =0;i<arr.length;i++) {
-                    if(i <= line.split(",").length-1) {
-                        arr[i] = line.split(",")[i];
-                    } else {
-                        arr[i] = null;
-                    }
-                }
-                //System.out.println(builder.buildWithArr(arr));
-            } else {
-                //System.out.println(builder.buildWithArr(line.split(",")));
-            }
-        }
-        //TODO, movies.csv file has comma in the movie name
-        else {
-
-        }
+    public String parse(String line, String fileName, ParseStrategy parseStrategy) {
+        parseStrategy.parse(line, fileName);
         return null;
     }
 

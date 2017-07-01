@@ -2,7 +2,9 @@ package com.bhargo;
 
 import com.bhargo.model.builder.*;
 import com.bhargo.parser.MovieLensParser;
+import com.bhargo.parser.MovieParseStrategy;
 import com.bhargo.parser.Parser;
+import com.bhargo.parser.StandardParserStrategy;
 import com.bhargo.reader.FileReader;
 import com.bhargo.reader.Reader;
 import org.springframework.context.annotation.Bean;
@@ -57,6 +59,16 @@ public class Config {
     @Bean
     public Parser parser() {
         return new MovieLensParser();
+    }
+
+    @Bean
+    public MovieParseStrategy movieParseStrategy() {
+        return new MovieParseStrategy();
+    }
+
+    @Bean
+    public StandardParserStrategy standardParserStrategy() {
+        return new StandardParserStrategy();
     }
 
     @Bean

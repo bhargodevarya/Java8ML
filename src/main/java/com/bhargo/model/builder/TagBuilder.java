@@ -1,6 +1,5 @@
 package com.bhargo.model.builder;
 
-import com.bhargo.Builder;
 import com.bhargo.model.Tag;
 
 public class TagBuilder implements Builder<Tag> {
