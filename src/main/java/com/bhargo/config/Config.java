@@ -1,5 +1,6 @@
 package com.bhargo.config;
 
+import com.bhargo.model.MovieLens;
 import com.bhargo.model.builder.*;
 import com.bhargo.parser.MovieLensParser;
 import com.bhargo.parser.MovieParseStrategy;
@@ -7,6 +8,7 @@ import com.bhargo.parser.Parser;
 import com.bhargo.parser.StandardParserStrategy;
 import com.bhargo.reader.FileReader;
 import com.bhargo.reader.Reader;
+import com.bhargo.service.MovieService;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
@@ -75,6 +77,22 @@ public class Config {
     public MetaInfo metaInfo() {
         return new MetaInfo();
     }
+
+    @Bean
+    public MovieLensBuilder movieLensBuilder() {
+        return new MovieLensBuilder();
+    }
+
+    @Bean
+    public MovieLens movieLens() {
+        return util().init();
+    }
+
+    @Bean
+    public MovieService movieService() {
+        return new MovieService();
+    }
+
     @Bean
     public BuilderFactory builderFactory() {
         BuilderFactory builderFactory = new BuilderFactory();

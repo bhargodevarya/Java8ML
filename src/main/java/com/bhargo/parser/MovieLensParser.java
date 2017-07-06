@@ -14,9 +14,7 @@ public class MovieLensParser implements Parser<BaseModel> {
      * @return
      */
     @Override
-    public List<BaseModel> parse(String line, ParseStrategy parseStrategy) {
-        List<BaseModel> list = new ArrayList<>();
-        list.add(parseStrategy.parse(line));
-        return list;
+    public BaseModel parse(String line, ParseStrategy parseStrategy) {
+        return parseStrategy.parse(line);
     }
 }

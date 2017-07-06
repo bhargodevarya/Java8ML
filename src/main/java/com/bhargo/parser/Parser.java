@@ -1,10 +1,8 @@
 package com.bhargo.parser;
 
-import java.util.List;
-
 @FunctionalInterface
 public interface Parser<T> {
 
-    List<T> parse(String line, ParseStrategy parseStrategy);
+    <T> T parse(String line, ParseStrategy parseStrategy);
 
 }
