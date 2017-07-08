@@ -24,6 +24,7 @@ public class Main implements CommandLineRunner {
 
     @Override
     public void run(String... args) throws Exception {
-        System.out.println(movieService.howToUseReduce().get());
+        System.out.println(movieService.howToUseReduce());
+        //System.out.println(movieService.groupMoviesByYear());
     }
 }
