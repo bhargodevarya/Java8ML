@@ -9,6 +9,7 @@ import com.bhargo.parser.StandardParserStrategy;
 import com.bhargo.reader.FileReader;
 import com.bhargo.reader.Reader;
 import com.bhargo.service.MovieService;
+import com.bhargo.service.TagService;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
@@ -91,6 +92,11 @@ public class Config {
     @Bean
     public MovieService movieService() {
         return new MovieService();
+    }
+
+    @Bean
+    public TagService tagService() {
+        return new TagService();
     }
 
     @Bean

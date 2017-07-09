@@ -2,6 +2,7 @@ package com.bhargo;
 
 import com.bhargo.model.builder.*;
 import com.bhargo.service.MovieService;
+import com.bhargo.service.TagService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
@@ -18,13 +19,18 @@ public class Main implements CommandLineRunner {
     @Autowired
     private MovieService movieService;
 
+    @Autowired
+    private TagService tagService;
+
     public static void main(String[] args) {
         SpringApplication.run(Main.class, args);
     }
 
     @Override
     public void run(String... args) throws Exception {
-        System.out.println(movieService.howToUseReduce());
+        //System.out.println(movieService.howToUseReduce());
         //System.out.println(movieService.groupMoviesByYear());
+        //tagService.groupMoviesByTag();
+        tagService.groupMoviesByTagsUsers();
     }
 }
