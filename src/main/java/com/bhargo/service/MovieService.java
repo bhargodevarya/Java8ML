@@ -40,10 +40,10 @@ public class MovieService {
      * produces distinct items of a stream
      * @see Stream#distinct()
      */
-    public void distinctGenres(){
-        movieLens.getMovies().stream().filter(n -> n!=null).
+    public List<String> distinctGenres(){
+        return movieLens.getMovies().stream().filter(n -> n!=null).
                 map(m -> ((Movie)m).getGenres().split("\\|")).
-                flatMap(a -> Arrays.stream(a)).distinct().forEach(System.out::println);
+                flatMap(a -> Arrays.stream(a)).distinct().collect(Collectors.toList());
     }
 
     /**

@@ -22,7 +22,7 @@ public class TagService {
     private MovieLens movieLens;
 
     //TODO try collectingAndThen
-    public void groupMoviesByTag() throws IOException {
+    public Map<String,HashSet<String>> groupMoviesByTag() throws IOException {
         //to get <tag, List<Tag>>
         Map<String, List<Tag>> map = movieLens.getTags().stream().
                 filter(t -> t != null).map(m -> (Tag) m).
@@ -48,6 +48,7 @@ public class TagService {
 
         //map.entrySet().stream().forEach(e -> System.out.println("key is " +e.getKey() + " value is " + e.getValue()));
         map2.entrySet().stream().forEach(System.out::println);
+        return map2;
     }
 
 
