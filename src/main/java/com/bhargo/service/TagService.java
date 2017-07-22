@@ -35,7 +35,9 @@ public class TagService {
                 collect(Collectors.
                         groupingBy((Tag g) -> g.getTag(),
                                 Collector.of(() -> new HashSet<String>(), (h, q) -> {
-                                            String title = movieLens.getMovies().stream().filter(f -> f != null).map(m -> (Movie) m).
+                                            String title = movieLens.getMovies().
+                                                    stream().filter(f -> f != null).
+                                                    map(m -> (Movie) m).
                                                     filter(n -> n.getMovieId() == q.getMovieId()).
                                                     findAny().
                                                     orElseGet(() -> new Movie(0, "NOT A MOVIE", "")).

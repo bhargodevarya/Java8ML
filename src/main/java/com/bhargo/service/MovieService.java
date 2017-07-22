@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.*;
 import java.util.function.*;
+import java.util.stream.Collector;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -80,7 +81,8 @@ public class MovieService {
                         (List<Integer> l, Integer a) -> {
                             l.add(a);
                             return l;
-                        }, (List<Integer> l1, List<Integer> l2) -> {
+                        },//the last param only gets called if its a parallel stream
+                                (List<Integer> l1, List<Integer> l2) -> {
                             System.out.println("l1 is" + l1 + "l2 is " + l2);
                             l1.addAll(l2);
                             return l1;
@@ -113,9 +115,54 @@ public class MovieService {
                 ));*/
         return movieLens.getMovies().stream().filter(n -> n!=null).map(n -> ((Movie)n)).
                 filter(this::movieFilterCriteria).
-                collect(Collectors.groupingBy((Movie movie) ->
-                     getYear(movie.getTitle())
+                collect(Collectors.groupingBy(movie ->
+                        //could also be getYear(movie.getTitle())
+                        getYear(movie.getTitle()), Collectors.toCollection(ArrayList::new)
                 ));
+    }
+
+    private class MovieCollector implements Collector<Movie,Map<String,List<Movie>>,Map<String,List<Movie>>> {
+
+        @Override
+        public Supplier<Map<String, List<Movie>>> supplier() {
+            return () -> new HashMap<>();
+        }
+
+        @Override
+        public BiConsumer<Map<String, List<Movie>>, Movie> accumulator() {
+            //you know the drill
+            return (Map<String, List<Movie>> map,Movie movie) -> {
+                if(map.containsKey(movie.getTitle())) {
+
+                } else {
+
+                }
+            };
+            //return null;
+        }
+
+        @Override
+        public BinaryOperator<Map<String, List<Movie>>> combiner() {
+            //simple logic to merge two maps
+            return null;
+        }
+
+        @Override
+        public Function<Map<String, List<Movie>>, Map<String, List<Movie>>> finisher() {
+            return Function.identity();
+        }
+
+        @Override
+        public Set<Characteristics> characteristics() {
+            return null;
+        }
+    }
+
+    public Map<String, Long> countMoviesByyear() {
+        Map<String, Long> map =movieLens.getMovies().stream().filter(n -> n!= null).
+                map(m -> (Movie)m).collect(Collectors.groupingBy(movie -> getYear(movie.getTitle()),
+                Collectors.counting()));
+        return map;
     }
 
 }

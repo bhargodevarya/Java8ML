@@ -1,5 +1,6 @@
 package com.bhargo.model.builder;
 
+import com.bhargo.config.MetaInfo;
 import com.bhargo.model.BaseModel;
 import com.bhargo.model.MovieLens;
 import com.bhargo.parser.*;
@@ -19,8 +20,6 @@ import java.util.stream.Stream;
 
 public class Util {
 
-    private final static File fileDir = new File("D:\\ml-20m");
-
     @Autowired
     private Parser parser;
 
@@ -36,12 +35,16 @@ public class Util {
     @Autowired
     private MovieLensBuilder movieLensBuilder;
 
+    @Autowired
+    private MetaInfo metaInfo;
+
     /**
      * This method initiates the parse process
      */
     public MovieLens init() {
         MovieLens movieLens = new MovieLens();
-        for(File file:fileDir.listFiles()) {
+        File location = new File(metaInfo.getFileLocation());
+        for(File file:location.listFiles()) {
             if(!file.getName().contains("txt")) {
                 movieLens = movieLensBuilder.build(file.getName(), startParse(file));
             }

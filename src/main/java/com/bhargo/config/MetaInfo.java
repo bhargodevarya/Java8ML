@@ -22,6 +22,9 @@ public class MetaInfo {
     @Value("${tag.col.num}")
     private int tagCol;
 
+    @Value("${file.location}")
+    private String fileLocation;
+
     public int getColumns(String fileName) {
         int result = 0;
         switch (fileName) {
@@ -34,5 +37,9 @@ public class MetaInfo {
         }
         if (result == 0) throw new IllegalArgumentException("Invalid file name");
         return result;
+    }
+
+    public String getFileLocation() {
+        return fileLocation;
     }
 }

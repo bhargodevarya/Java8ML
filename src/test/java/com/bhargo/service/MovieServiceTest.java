@@ -4,6 +4,7 @@ import com.bhargo.BaseTest;
 import com.bhargo.model.Movie;
 import com.bhargo.model.MovieLens;
 import org.hamcrest.collection.IsIterableContainingInAnyOrder;
+import org.hamcrest.collection.IsMapContaining;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -16,6 +17,7 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -44,5 +46,17 @@ public class MovieServiceTest extends BaseTest{
                 genres,
                 IsIterableContainingInAnyOrder.
                         containsInAnyOrder("Action","Drama","Comedy","Adventure"));
+    }
+
+    @Test
+    public void testCoutMoviesByYear() {
+        Mockito.when(movieLens.getMovies()).
+                thenReturn(Stream.of(new Movie(1,"abc (1988)",""),
+                        new Movie(2,"def (1947)",""),
+                        new Movie(2,"xyz (1988)","")).
+                        collect(Collectors.toList()));
+        Map<String, Long> map = movieService.countMoviesByyear();
+        Assert.assertThat(map, IsMapContaining.hasEntry("1947",1L));
+        Assert.assertThat(map, IsMapContaining.hasEntry("1988",2L));
     }
 }
