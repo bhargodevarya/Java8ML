@@ -49,7 +49,7 @@ public class MovieServiceTest extends BaseTest{
     }
 
     @Test
-    public void testCoutMoviesByYear() {
+    public void testCountMoviesByYear() {
         Mockito.when(movieLens.getMovies()).
                 thenReturn(Stream.of(new Movie(1,"abc (1988)",""),
                         new Movie(2,"def (1947)",""),
@@ -58,5 +58,18 @@ public class MovieServiceTest extends BaseTest{
         Map<String, Long> map = movieService.countMoviesByyear();
         Assert.assertThat(map, IsMapContaining.hasEntry("1947",1L));
         Assert.assertThat(map, IsMapContaining.hasEntry("1988",2L));
+    }
+
+    @Test
+    public void testGroupMovieByYear() {
+        Mockito.when(movieLens.getMovies()).
+                thenReturn(Stream.of(new Movie(1,"abc (1988)",""),
+                        new Movie(2,"def (1947)",""),
+                        new Movie(3,"xyz (1988)","")).
+                        collect(Collectors.toList()));
+        Map<String,List<Movie>> actual = movieService.groupMoviesByYear();
+        Assert.assertThat(actual, IsMapContaining.hasKey("1947"));
+        List<Movie> list1 = actual.get("1988");
+        Assert.assertEquals(2, list1.size());
     }
 }

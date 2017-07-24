@@ -89,6 +89,14 @@ public class MovieService {
                         }).forEach(System.out::println);
     }
 
+    public List<String> getDistinctYears() {
+        List<String> list =movieLens.getMovies().stream().filter(m -> m!=null && ((Movie)m).getTitle().contains("(")).
+                map(n -> getYear(((Movie)n).getTitle())).
+                distinct().collect(Collectors.toList());
+        System.out.println(list.size());
+        return list;
+    }
+
     private String getYear(String movieName) {
         return movieName.substring(movieName.lastIndexOf("(")+1,movieName.lastIndexOf(")"));
     }
@@ -113,12 +121,24 @@ public class MovieService {
                 collect(Collectors.groupingBy((Movie movie) ->
                         getYear(movie.getTitle()),Collectors.mapping(x -> x, Collectors.toSet())
                 ));*/
+        //custom collector to group movies by year
         return movieLens.getMovies().stream().filter(n -> n!=null).map(n -> ((Movie)n)).
+                filter(this::movieFilterCriteria).
+                collect(new MovieCollector());
+        //inbuilt collector to group movies by year
+        /*return movieLens.getMovies().stream().filter(n -> n!=null).map(n -> ((Movie)n)).
                 filter(this::movieFilterCriteria).
                 collect(Collectors.groupingBy(movie ->
                         //could also be getYear(movie.getTitle())
                         getYear(movie.getTitle()), Collectors.toCollection(ArrayList::new)
-                ));
+                ));*/
+    }
+
+    public Map<String, Long> countMoviesByyear() {
+        Map<String, Long> map =movieLens.getMovies().stream().filter(n -> n!= null).
+                map(m -> (Movie)m).collect(Collectors.groupingBy(movie -> getYear(movie.getTitle()),
+                Collectors.counting()));
+        return map;
     }
 
     private class MovieCollector implements Collector<Movie,Map<String,List<Movie>>,Map<String,List<Movie>>> {
@@ -132,19 +152,25 @@ public class MovieService {
         public BiConsumer<Map<String, List<Movie>>, Movie> accumulator() {
             //you know the drill
             return (Map<String, List<Movie>> map,Movie movie) -> {
-                if(map.containsKey(movie.getTitle())) {
-
-                } else {
-
+                List<Movie> list = map.get(getYear(movie.getTitle()));
+                if(list != null) {
+                    list.add(movie);
                 }
+                else {
+                    list = new ArrayList<>();
+                    list.add(movie);
+                }
+                map.put(getYear(movie.getTitle()),list);
             };
-            //return null;
         }
 
         @Override
         public BinaryOperator<Map<String, List<Movie>>> combiner() {
             //simple logic to merge two maps
-            return null;
+            return (m1,m2) -> {
+                m1.putAll(m2);
+                return m1;
+            };
         }
 
         @Override
@@ -154,15 +180,8 @@ public class MovieService {
 
         @Override
         public Set<Characteristics> characteristics() {
-            return null;
+            return Collections.unmodifiableSet(EnumSet.of(Characteristics.UNORDERED));
         }
-    }
-
-    public Map<String, Long> countMoviesByyear() {
-        Map<String, Long> map =movieLens.getMovies().stream().filter(n -> n!= null).
-                map(m -> (Movie)m).collect(Collectors.groupingBy(movie -> getYear(movie.getTitle()),
-                Collectors.counting()));
-        return map;
     }
 
 }
